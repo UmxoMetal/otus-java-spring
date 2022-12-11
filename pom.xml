@@ -8,6 +8,9 @@
     <artifactId>spring-otus-2022-11-martynovr</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>hw01-spring-xml-configuration</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
