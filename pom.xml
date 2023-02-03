@@ -11,6 +11,7 @@
     <modules>
         <module>hw01-spring-xml-configuration</module>
         <module>hw02-spring-annotation-based-configuration</module>
+        <module>hw03-spring-boot-configuration</module>
     </modules>
 
     <properties>

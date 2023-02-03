@@ -1,0 +1,5 @@
+Under what conditions is an object's finalize() method invoked by the garbage collector?,When it detects that the object has become unreachable.,As soon as object is set as null.,At fixed interval it checks for null value.,None of the above.,1
+What is polymorphism?,Polymorphism is a technique to define different objects of same type.,Polymorphism is the ability of an object to take on many forms.,Polymorphism is a technique to define different methods of same type.,None of the above.,2
+What is a marker interface?,Marker interface is an interface with no method.,marker interface is an interface with single method - mark().,marker interface is an interface with single method - marker().,none of the above.,1
+Which of the following is Faster :StringBuilder or StringBuffer?,StringBuilder,StringBuffer,Both of the above.,none of the above.,1
+Which of the following is a thread safe?,StringBuilder,StringBuffer,Both of the above,none of the above,2

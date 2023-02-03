@@ -1,0 +1,8 @@
+spring:
+  messages:
+    basename: i18n/message
+
+test:
+  current-locale: ru
+  file-name: data_${test.current-locale}.csv
+  passed-score: 5
