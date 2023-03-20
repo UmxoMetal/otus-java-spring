@@ -1,6 +1,8 @@
 package ru.otus.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import ru.otus.dao.AuthorDao;
 import ru.otus.dao.BookDao;
@@ -9,9 +11,14 @@ import ru.otus.domain.*;
 import ru.otus.exception.BookServiceException;
 import ru.otus.service.BookService;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
+import static java.util.Objects.*;
 import static java.util.stream.Collectors.*;
 import static org.apache.commons.collections4.CollectionUtils.*;
 import static org.apache.commons.collections4.CollectionUtils.isEmpty;
@@ -40,10 +47,32 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto getBookByIdWithFullInfo(Long booId) {
-        var bookDto = bookDao.getBookById(booId)
-                .orElseThrow(() -> new BookServiceException(format(MSG_BOOK_NOT_FOUND, booId)));
-        bookDto.getBookAuthors().addAll(authorDao.getAllAuthorsByBooId(booId));
-        bookDto.getBookGenres().addAll(genreDao.getAllGenresByBooId(booId));
+        var bookByIdWithFullInfo = bookDao.getBookByIdWithFullInfo(booId);
+        if (isEmpty(bookByIdWithFullInfo)) {
+            throw new BookServiceException(format(MSG_BOOK_NOT_FOUND, booId));
+        }
+        var bookDto = BookDto
+                .builder()
+                .booId(bookByIdWithFullInfo.get(0).getBooId())
+                .bookName(bookByIdWithFullInfo.get(0).getBookName())
+                .build();
+        bookDto.getBookGenres().addAll(bookByIdWithFullInfo
+                .stream()
+                .filter(dto -> !isNull(dto.getGenreName()))
+                .map(dto -> GenreDto
+                        .builder()
+                        .genreName(dto.getGenreName())
+                        .build())
+                .toList());
+        bookDto.getBookAuthors().addAll(bookByIdWithFullInfo
+                .stream()
+                .filter(dto -> !isNull(dto.getFio()))
+                .map(dto -> AuthorDto
+                        .builder()
+                        .fio(dto.getFio())
+                        .build())
+                .toList());
+        System.out.println(bookDto.getBookAuthors());
         return bookDto;
     }
 
