@@ -13,6 +13,7 @@
         <module>hw02-spring-annotation-based-configuration</module>
         <module>hw03-spring-boot-configuration</module>
         <module>hw04-spring-shell</module>
+        <module>hw05-spring-jdbc</module>
     </modules>
 
     <properties>
