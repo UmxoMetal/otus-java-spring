@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface GenreDao {
     void createGenre(Genre genre);
 
-    Optional<Genre> getGenreById(Long genId);
+    Optional<Genre> getGenreById(long genId);
 
     List<Genre> getAllGenres();
 
-    int deleteGenreById(Long genId);
+    int deleteGenreById(long genId);
 }

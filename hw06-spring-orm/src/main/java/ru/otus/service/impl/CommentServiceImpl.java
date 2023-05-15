@@ -20,7 +20,6 @@ import static org.apache.commons.collections4.CollectionUtils.isEmpty;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentDao commentDao;
-    private final PlatformTransactionManager transactionalManager;
 
     private static final String MSG_COMMENT_NOT_FOUND = "Comment with id %s not found";
     private static final String MSG_EMPTY_COMMENT_TABLE = "Comment table is empty";
@@ -29,20 +28,18 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void createComment(Comment comment) {
-        commentDao.createComment(comment);
+        commentDao.create(comment);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Comment getCommentById(long comId) {
-        return commentDao.getCommentById(comId)
+        return commentDao.getById(comId)
                 .orElseThrow(() -> new BookServiceException(format(MSG_COMMENT_NOT_FOUND, comId)));
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Comment> getAllComments() {
-        var allComments = commentDao.getAllComments();
+        var allComments = commentDao.getAll();
         if (isEmpty(allComments)) {
             throw new BookServiceException(MSG_EMPTY_COMMENT_TABLE);
         }
@@ -50,9 +47,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public void deleteCommentById(long comId) {
-        if (commentDao.deleteCommentById(comId) == 0) {
+        if (commentDao.deleteById(comId) == 0) {
             throw new BookServiceException(MSG_DELETION_FAILED);
         }
     }

@@ -26,17 +26,17 @@ public class BookDaoImpl implements BookDao {
     private EntityManager em;
 
     @Override
-    public void createBook(Book book) {
+    public void create(Book book) {
         em.persist(book);
     }
 
     @Override
-    public Optional<Book> getBookById(long booId) {
+    public Optional<Book> getById(long booId) {
         return ofNullable(em.find(Book.class, booId));
     }
 
     @Override
-    public Optional<Book> getBookByIdWithGraph(long booId, String graphName) {
+    public Optional<Book> getByIdWithGraph(long booId, String graphName) {
         var entityGraph = em.getEntityGraph(graphName);
         return em.createQuery("select distinct b from Book b where b.booId = :booId", Book.class)
                 .setParameter("booId", booId)
@@ -48,13 +48,13 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> getAllBooks() {
+    public List<Book> getAll() {
         return em.createQuery("select b from Book b order by b.booId", Book.class)
                 .getResultList();
     }
 
     @Override
-    public List<Book> getAllBooksWithGraph(String graphName) {
+    public List<Book> getAllWithGraph(String graphName) {
         var entityGraph = em.getEntityGraph(graphName);
         return em.createQuery("select b from Book b order by b.booId", Book.class)
                 .setHint(JAVAX_PERSISTENCE_FETCHGRAPH, entityGraph)
@@ -62,7 +62,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public int deleteBookById(long booId) {
+    public int deleteById(long booId) {
         return em.createQuery("delete from Book b where b.booId = :booId")
                 .setParameter("booId", booId)
                 .executeUpdate();

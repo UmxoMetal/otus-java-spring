@@ -34,21 +34,21 @@ class BookDaoImplTest {
     @Test
     @DisplayName("Получение всех книг")
     void getAllBooksTest() {
-        var allBooks = bookDao.getAllBooks();
+        var allBooks = bookDao.getAll();
         assertTrue(isNotEmpty(allBooks));
     }
 
     @Test
     @DisplayName("Получение всех книг c графом")
     void getAllBooksWithGraphTest() {
-        var allBooksWithGraph = bookDao.getAllBooksWithGraph(BOOK_AUTHORS_GRAPH);
+        var allBooksWithGraph = bookDao.getAllWithGraph(BOOK_AUTHORS_GRAPH);
         assertTrue(isNotEmpty(allBooksWithGraph));
     }
 
     @Test
     @DisplayName("Получение книги по айди. Книга найдена")
     void getBookByIdFoundTest() {
-        var bookByIdOpt = bookDao.getBookById(3L);
+        var bookByIdOpt = bookDao.getById(3L);
         assertTrue(bookByIdOpt.isPresent());
 
         assertThat(bookByIdOpt.get())
@@ -66,33 +66,33 @@ class BookDaoImplTest {
     @Test
     @DisplayName("Получение книги по айди. Книга не найдена")
     void getBookByIdNotFoundTest() {
-        var notFoundBookByIdOpt = bookDao.getBookById(4L);
+        var notFoundBookByIdOpt = bookDao.getById(4L);
         assertTrue(notFoundBookByIdOpt.isEmpty());
     }
 
     @Test
     @DisplayName("Получение книги по айди c использванием графа")
     void getBookByIdWithGraphTest() {
-        var bookByIdWithGraphOpt = bookDao.getBookByIdWithGraph(1L, BOOK_AUTHORS_GRAPH);
+        var bookByIdWithGraphOpt = bookDao.getByIdWithGraph(1L, BOOK_AUTHORS_GRAPH);
         assertTrue(bookByIdWithGraphOpt.isPresent());
     }
 
     @Test
     @DisplayName("Удаление книги")
     void deleteBookByIdTest() {
-        int deletedRowsCount = bookDao.deleteBookById(1L);
+        int deletedRowsCount = bookDao.deleteById(1L);
         assertEquals(1, deletedRowsCount);
-        var bookOpt = bookDao.getBookById(1L);
+        var bookOpt = bookDao.getById(1L);
         assertTrue(bookOpt.isEmpty());
     }
 
     @Test
     @DisplayName("Удаление книги, которой нет в БД")
     void deleteNotPresentBookByIdTest() {
-        var bookOpt = bookDao.getBookById(4L);
+        var bookOpt = bookDao.getById(4L);
         assertTrue(bookOpt.isEmpty());
 
-        int deletedRowsCount = bookDao.deleteBookById(4L);
+        int deletedRowsCount = bookDao.deleteById(4L);
         assertEquals(0, deletedRowsCount);
     }
 
@@ -105,9 +105,9 @@ class BookDaoImplTest {
                 .builder()
                 .bookName(bookName)
                 .build();
-        bookDao.createBook(testCreatedBook);
+        bookDao.create(testCreatedBook);
 
-        var bookByIdOpt = bookDao.getBookById(10L);
+        var bookByIdOpt = bookDao.getById(10L);
 
         assertTrue(bookByIdOpt.isPresent());
         assertEquals(bookName, bookByIdOpt.get().getBookName());
@@ -131,9 +131,9 @@ class BookDaoImplTest {
                         .commentText("Created comment")
                         .build()))
                 .build();
-        bookDao.createBook(testCreatedBook);
+        bookDao.create(testCreatedBook);
 
-        var bookByIdOpt = bookDao.getBookById(11L);
+        var bookByIdOpt = bookDao.getById(11L);
 
         assertTrue(bookByIdOpt.isPresent());
         assertEquals(bookName, bookByIdOpt.get().getBookName());

@@ -1,12 +1,11 @@
-package ru.otus.service.impl;
+package ru.otus.ui.impl;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.domain.Author;
 import ru.otus.domain.Book;
 import ru.otus.domain.Comment;
 import ru.otus.domain.Genre;
-import ru.otus.service.BookPrinterService;
+import ru.otus.ui.BookPrinterService;
 
 import static java.lang.String.format;
 import static java.util.stream.Collectors.joining;

@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AuthorDao {
-    void createAuthor(Author author);
+    void create(Author author);
 
-    Optional<Author> getAuthorById(Long autId);
+    Optional<Author> getById(long autId);
 
-    List<Author> getAllAuthors();
+    List<Author> getAll();
 
-    int deleteAuthorById(Long autId);
+    int deleteById(long autId);
 }

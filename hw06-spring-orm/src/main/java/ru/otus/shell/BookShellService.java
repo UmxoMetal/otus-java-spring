@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.otus.domain.Book;
-import ru.otus.service.BookPrinterService;
+import ru.otus.ui.BookPrinterService;
 import ru.otus.service.BookService;
 import java.util.List;
 

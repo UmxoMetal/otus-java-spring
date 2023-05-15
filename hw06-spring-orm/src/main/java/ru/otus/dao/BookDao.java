@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookDao {
-    void createBook(Book book);
+    void create(Book book);
 
-    Optional<Book> getBookById(long booId);
+    Optional<Book> getById(long booId);
 
-    Optional<Book> getBookByIdWithGraph(long booId, String graph);
+    Optional<Book> getByIdWithGraph(long booId, String graphName);
 
-    List<Book> getAllBooks();
+    List<Book> getAll();
 
-    List<Book> getAllBooksWithGraph(String graphName);
+    List<Book> getAllWithGraph(String graphName);
 
-    int deleteBookById(long booId);
+    int deleteById(long booId);
 }

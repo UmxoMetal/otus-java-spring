@@ -2,14 +2,8 @@ package ru.otus.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
-import ru.otus.dao.AuthorDao;
 import ru.otus.dao.BookDao;
-import ru.otus.dao.GenreDao;
 import ru.otus.domain.Book;
 import ru.otus.exception.BookServiceException;
 import ru.otus.service.BookService;
@@ -33,36 +27,33 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public void createBook(Book book) {
-        bookDao.createBook(book);
+        bookDao.create(book);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Book getBookById(long booId) {
-        return bookDao.getBookById(booId)
+        return bookDao.getById(booId)
                 .orElseThrow(() -> new BookServiceException(format(MSG_BOOK_NOT_FOUND, booId)));
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Book getBookByIdWithGraph(long booId, String graphName) {
-        return bookDao.getBookByIdWithGraph(booId, graphName)
+        return bookDao.getByIdWithGraph(booId, graphName)
                 .orElseThrow(() -> new BookServiceException(format(MSG_BOOK_NOT_FOUND, booId)));
     }
 
     @Override
     @Transactional(readOnly = true)
     public Book getBookByIdWithFullInfo(long booId) {
-        bookDao.getBookByIdWithGraph(booId, BOOK_AUTHORS_GRAPH)
+        bookDao.getByIdWithGraph(booId, BOOK_AUTHORS_GRAPH)
                 .orElseThrow(() -> new BookServiceException(format(MSG_BOOK_NOT_FOUND, booId)));
-        bookDao.getBookByIdWithGraph(booId, BOOK_GENRES_GRAPH).get();
-        return bookDao.getBookByIdWithGraph(booId, BOOK_COMMENTS_GRAPH).get();
+        bookDao.getByIdWithGraph(booId, BOOK_GENRES_GRAPH).get();
+        return bookDao.getByIdWithGraph(booId, BOOK_COMMENTS_GRAPH).get();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Book> getAllBooks() {
-        var allBooks = bookDao.getAllBooks();
+        var allBooks = bookDao.getAll();
         if (isEmpty(allBooks)) {
             throw new BookServiceException(MSG_EMPTY_BOOK_TABLE);
         }
@@ -72,18 +63,18 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public List<Book> getAllBooksWithInfo() {
-        var allBooksWithInfo = bookDao.getAllBooksWithGraph(BOOK_AUTHORS_GRAPH);
+        var allBooksWithInfo = bookDao.getAllWithGraph(BOOK_AUTHORS_GRAPH);
         if (isEmpty(allBooksWithInfo)) {
             throw new BookServiceException(MSG_EMPTY_BOOK_TABLE);
         }
-        bookDao.getAllBooksWithGraph(BOOK_GENRES_GRAPH);
-        return bookDao.getAllBooksWithGraph(BOOK_COMMENTS_GRAPH);
+        bookDao.getAllWithGraph(BOOK_GENRES_GRAPH);
+        return bookDao.getAllWithGraph(BOOK_COMMENTS_GRAPH);
     }
 
     @Override
     @Transactional
     public void deleteBookById(long booId) {
-        if (bookDao.deleteBookById(booId) == 0) {
+        if (bookDao.deleteById(booId) == 0) {
             throw new BookServiceException(MSG_DELETION_FAILED);
         }
     }

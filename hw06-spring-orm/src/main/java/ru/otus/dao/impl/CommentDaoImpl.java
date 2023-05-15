@@ -20,23 +20,23 @@ public class CommentDaoImpl implements CommentDao {
     private EntityManager em;
 
     @Override
-    public void createComment(Comment comment) {
+    public void create(Comment comment) {
         em.persist(comment);
     }
 
     @Override
-    public Optional<Comment> getCommentById(Long comId) {
+    public Optional<Comment> getById(long comId) {
         return ofNullable(em.find(Comment.class, comId));
     }
 
     @Override
-    public List<Comment> getAllComments() {
+    public List<Comment> getAll() {
         return em.createQuery("select c from Comment c", Comment.class)
                 .getResultList();
     }
 
     @Override
-    public int deleteCommentById(Long comId) {
+    public int deleteById(long comId) {
         return em.createQuery("delete from Comment c where c.comId = :comId")
                 .setParameter("comId", comId)
                 .executeUpdate();

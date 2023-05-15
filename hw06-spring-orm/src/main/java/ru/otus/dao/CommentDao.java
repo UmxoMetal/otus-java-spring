@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CommentDao {
-    void createComment(Comment comment);
+    void create(Comment comment);
 
-    Optional<Comment> getCommentById(Long comId);
+    Optional<Comment> getById(long comId);
 
-    List<Comment> getAllComments();
+    List<Comment> getAll();
 
-    int deleteCommentById(Long comId);
+    int deleteById(long comId);
 }

@@ -26,20 +26,18 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     @Transactional
     public void createAuthor(Author author) {
-        authorDao.createAuthor(author);
+        authorDao.create(author);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Author getAuthorById(long autId) {
-        return authorDao.getAuthorById(autId)
+        return authorDao.getById(autId)
                 .orElseThrow(() -> new BookServiceException(format(MSG_AUTHOR_NOT_FOUND, autId)));
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Author> getAllAuthors() {
-        var allAuthors = authorDao.getAllAuthors();
+        var allAuthors = authorDao.getAll();
         if (isEmpty(allAuthors)) {
             throw new BookServiceException(MSG_EMPTY_AUTHOR_TABLE);
         }
@@ -47,9 +45,9 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public void deleteAuthorById(long autId) {
-        if (authorDao.deleteAuthorById(autId) == 0) {
+        if (authorDao.deleteById(autId) == 0) {
             throw new BookServiceException(MSG_DELETION_FAILED);
         }
     }

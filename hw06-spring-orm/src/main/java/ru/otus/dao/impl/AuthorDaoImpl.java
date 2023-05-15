@@ -21,23 +21,23 @@ public class AuthorDaoImpl implements AuthorDao {
     private EntityManager em;
 
     @Override
-    public void createAuthor(Author author) {
+    public void create(Author author) {
         em.persist(author);
     }
 
     @Override
-    public Optional<Author> getAuthorById(Long autId) {
+    public Optional<Author> getById(long autId) {
         return ofNullable(em.find(Author.class, autId));
     }
 
     @Override
-    public List<Author> getAllAuthors() {
+    public List<Author> getAll() {
         return em.createQuery("select a from Author a", Author.class)
                 .getResultList();
     }
 
     @Override
-    public int deleteAuthorById(Long autId) {
+    public int deleteById(long autId) {
         return em.createQuery("delete from Author a where a.autId = :autId")
                 .setParameter("autId", autId)
                 .executeUpdate();
