@@ -25,18 +25,18 @@ public class GenreServiceImpl implements GenreService {
     @Override
     @Transactional
     public void createGenre(Genre genreDto) {
-        genreDao.createGenre(genreDto);
+        genreDao.create(genreDto);
     }
 
     @Override
     public Genre getGenreById(long genId) {
-        return genreDao.getGenreById(genId)
+        return genreDao.getById(genId)
                 .orElseThrow(() -> new BookServiceException(format(MSG_GENRE_NOT_FOUND, genId)));
     }
 
     @Override
     public List<Genre> getAllGenres() {
-        var allGenres = genreDao.getAllGenres();
+        var allGenres = genreDao.getAll();
         if (isEmpty(allGenres)) {
             throw new BookServiceException(MSG_EMPTY_GENRE_TABLE);
         }
@@ -46,7 +46,7 @@ public class GenreServiceImpl implements GenreService {
     @Override
     @Transactional
     public void deleteGenreById(long autId) {
-        if (genreDao.deleteGenreById(autId) == 0) {
+        if (genreDao.deleteById(autId) == 0) {
             throw new BookServiceException(MSG_DELETION_FAILED);
         }
     }

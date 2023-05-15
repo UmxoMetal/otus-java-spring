@@ -21,23 +21,23 @@ public class GenreDaoImpl implements GenreDao {
     private EntityManager em;
 
     @Override
-    public void createGenre(Genre genre) {
+    public void create(Genre genre) {
         em.persist(genre);
     }
 
     @Override
-    public Optional<Genre> getGenreById(long genId) {
+    public Optional<Genre> getById(long genId) {
         return ofNullable(em.find(Genre.class, genId));
     }
 
     @Override
-    public List<Genre> getAllGenres() {
+    public List<Genre> getAll() {
         return em.createQuery("select g from Genre g", Genre.class)
                 .getResultList();
     }
 
     @Override
-    public int deleteGenreById(long genId) {
+    public int deleteById(long genId) {
         return em.createQuery("delete from Genre g where g.genId = :genId")
                 .setParameter("genId", genId)
                 .executeUpdate();

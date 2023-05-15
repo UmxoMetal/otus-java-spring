@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GenreDao {
-    void createGenre(Genre genre);
+    void create(Genre genre);
 
-    Optional<Genre> getGenreById(long genId);
+    Optional<Genre> getById(long genId);
 
-    List<Genre> getAllGenres();
+    List<Genre> getAll();
 
-    int deleteGenreById(long genId);
+    int deleteById(long genId);
 }
