@@ -2,6 +2,7 @@ package ru.otus.dao.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import ru.otus.dao.AuthorDao;
 import ru.otus.domain.Author;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
 
-@Repository
+@Service
 @RequiredArgsConstructor
 public class AuthorDaoImpl implements AuthorDao {
 
