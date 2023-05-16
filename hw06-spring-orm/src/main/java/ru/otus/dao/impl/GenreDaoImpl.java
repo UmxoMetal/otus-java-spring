@@ -37,9 +37,7 @@ public class GenreDaoImpl implements GenreDao {
     }
 
     @Override
-    public int deleteById(long genId) {
-        return em.createQuery("delete from Genre g where g.genId = :genId")
-                .setParameter("genId", genId)
-                .executeUpdate();
+    public void deleteById(Genre genre) {
+        em.remove(genre);
     }
 }

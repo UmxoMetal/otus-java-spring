@@ -36,9 +36,7 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public int deleteById(long comId) {
-        return em.createQuery("delete from Comment c where c.comId = :comId")
-                .setParameter("comId", comId)
-                .executeUpdate();
+    public void deleteById(Comment comment) {
+       em.remove(comment);
     }
 }

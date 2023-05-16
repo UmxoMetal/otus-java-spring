@@ -80,20 +80,11 @@ class BookDaoImplTest {
     @Test
     @DisplayName("Удаление книги")
     void deleteBookByIdTest() {
-        int deletedRowsCount = bookDao.deleteById(1L);
-        assertEquals(1, deletedRowsCount);
+        var byIdOpt = bookDao.getById(1L);
+        assertTrue(byIdOpt.isPresent());
+        bookDao.delete(byIdOpt.get());
         var bookOpt = bookDao.getById(1L);
         assertTrue(bookOpt.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Удаление книги, которой нет в БД")
-    void deleteNotPresentBookByIdTest() {
-        var bookOpt = bookDao.getById(4L);
-        assertTrue(bookOpt.isEmpty());
-
-        int deletedRowsCount = bookDao.deleteById(4L);
-        assertEquals(0, deletedRowsCount);
     }
 
     @Test

@@ -74,8 +74,6 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public void deleteBookById(long booId) {
-        if (bookDao.deleteById(booId) == 0) {
-            throw new BookServiceException(MSG_DELETION_FAILED);
-        }
+        bookDao.delete(getBookById(booId));
     }
 }

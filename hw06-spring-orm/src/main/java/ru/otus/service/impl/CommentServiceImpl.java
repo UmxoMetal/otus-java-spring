@@ -49,8 +49,6 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void deleteCommentById(long comId) {
-        if (commentDao.deleteById(comId) == 0) {
-            throw new BookServiceException(MSG_DELETION_FAILED);
-        }
+        commentDao.deleteById(getCommentById(comId));
     }
 }

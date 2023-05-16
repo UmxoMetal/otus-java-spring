@@ -45,9 +45,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     @Transactional
-    public void deleteGenreById(long autId) {
-        if (genreDao.deleteById(autId) == 0) {
-            throw new BookServiceException(MSG_DELETION_FAILED);
-        }
+    public void deleteGenreById(long genId) {
+        genreDao.deleteById(getGenreById(genId));
     }
 }

@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Map.*;
 import static java.util.Optional.ofNullable;
 
 @Repository
@@ -38,13 +39,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Optional<Book> getByIdWithGraph(long booId, String graphName) {
         var entityGraph = em.getEntityGraph(graphName);
-        return em.createQuery("select distinct b from Book b where b.booId = :booId", Book.class)
-                .setParameter("booId", booId)
-                .setHint(JAVAX_PERSISTENCE_FETCHGRAPH, entityGraph)
-                .setMaxResults(1)
-                .getResultList()
-                .stream()
-                .findFirst();
+        return ofNullable(em.find(Book.class, booId, of(JAVAX_PERSISTENCE_FETCHGRAPH, entityGraph)));
     }
 
     @Override
@@ -62,9 +57,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public int deleteById(long booId) {
-        return em.createQuery("delete from Book b where b.booId = :booId")
-                .setParameter("booId", booId)
-                .executeUpdate();
+    public void delete(Book book) {
+        em.remove(book);
     }
 }

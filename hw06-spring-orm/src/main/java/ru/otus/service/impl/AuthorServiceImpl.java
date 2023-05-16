@@ -21,7 +21,6 @@ public class AuthorServiceImpl implements AuthorService {
 
     private static final String MSG_AUTHOR_NOT_FOUND = "Author with id %s not found";
     private static final String MSG_EMPTY_AUTHOR_TABLE = "Author table is empty";
-    private static final String MSG_DELETION_FAILED = "Author deletion by id failed";
 
     @Override
     @Transactional
@@ -47,8 +46,6 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     @Transactional
     public void deleteAuthorById(long autId) {
-        if (authorDao.deleteById(autId) == 0) {
-            throw new BookServiceException(MSG_DELETION_FAILED);
-        }
+        authorDao.delete(getAuthorById(autId));
     }
 }

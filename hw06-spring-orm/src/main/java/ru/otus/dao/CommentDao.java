@@ -12,5 +12,5 @@ public interface CommentDao {
 
     List<Comment> getAll();
 
-    int deleteById(long comId);
+    void deleteById(Comment comment);
 }

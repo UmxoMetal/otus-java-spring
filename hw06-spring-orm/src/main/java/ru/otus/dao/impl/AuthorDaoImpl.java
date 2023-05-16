@@ -37,9 +37,7 @@ public class AuthorDaoImpl implements AuthorDao {
     }
 
     @Override
-    public int deleteById(long autId) {
-        return em.createQuery("delete from Author a where a.autId = :autId")
-                .setParameter("autId", autId)
-                .executeUpdate();
+    public void delete(Author author) {
+        em.remove(author);
     }
 }

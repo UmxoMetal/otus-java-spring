@@ -16,5 +16,5 @@ public interface BookDao {
 
     List<Book> getAllWithGraph(String graphName);
 
-    int deleteById(long booId);
+    void delete(Book book);
 }
