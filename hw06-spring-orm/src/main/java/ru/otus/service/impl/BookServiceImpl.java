@@ -30,7 +30,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public Book getBookById(long booId) {
         return bookDao.getById(booId)
                 .orElseThrow(() -> new BookServiceException(format(MSG_BOOK_NOT_FOUND, booId)));
