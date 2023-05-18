@@ -23,7 +23,6 @@ public class CommentServiceImpl implements CommentService {
 
     private static final String MSG_COMMENT_NOT_FOUND = "Comment with id %s not found";
     private static final String MSG_EMPTY_COMMENT_TABLE = "Comment table is empty";
-    private static final String MSG_DELETION_FAILED = "Comment deletion by id failed";
 
     @Override
     @Transactional

@@ -20,7 +20,6 @@ public class GenreServiceImpl implements GenreService {
 
     private static final String MSG_GENRE_NOT_FOUND = "Genre with id %s not found";
     private static final String MSG_EMPTY_GENRE_TABLE = "Genre table is empty";
-    private static final String MSG_DELETION_FAILED = "Genre deletion by id failed";
 
     @Override
     @Transactional

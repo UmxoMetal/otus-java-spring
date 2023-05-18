@@ -3,6 +3,8 @@ package ru.otus.shell;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.transaction.annotation.Transactional;
+import ru.otus.domain.Author;
 import ru.otus.domain.Book;
 import ru.otus.ui.BookPrinterService;
 import ru.otus.service.BookService;
@@ -25,8 +27,13 @@ public class BookShellService {
     }
 
     @ShellMethod(value = "Get book by id", key = {"book-get-by-id"})
+    @Transactional
     public String getBookById(long booId) {
-        return bookPrinterService.print(bookService.getBookById(booId));
+        //return bookPrinterService.print(bookService.getBookById(booId));
+        Book bookById = bookService.getBookById(booId);
+        List<Author> bookAuthors = bookById.getBookAuthors();
+        System.out.println(bookAuthors);
+        return null;
     }
 
     @ShellMethod(value = "Get book by id with author", key = {"book-get-by-id-with-author"})

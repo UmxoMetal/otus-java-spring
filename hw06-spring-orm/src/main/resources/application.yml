@@ -13,7 +13,7 @@ spring:
     generate-ddl: false
     hibernate:
        ddl-auto: none
-    show-sql: false # true for debug
+    show-sql: true # true for debug
     properties:
         hibernate:
           format_sql: true

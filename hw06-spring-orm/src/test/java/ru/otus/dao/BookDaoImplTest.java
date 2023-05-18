@@ -1,14 +1,17 @@
 package ru.otus.dao;
 
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.dao.impl.AuthorDaoImpl;
 import ru.otus.dao.impl.BookDaoImpl;
 import ru.otus.domain.Author;
 import ru.otus.domain.Book;
@@ -21,6 +24,7 @@ import static java.util.Collections.*;
 import static org.apache.commons.collections4.CollectionUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.otus.dao.impl.BookDaoImpl.BOOK_AUTHORS_GRAPH;
 
 @DataJpaTest
@@ -30,6 +34,9 @@ class BookDaoImplTest {
 
     @Autowired
     private BookDaoImpl bookDao;
+
+    @Autowired
+    private TestEntityManager em;
 
     @Test
     @DisplayName("Получение всех книг")
@@ -66,7 +73,7 @@ class BookDaoImplTest {
     @Test
     @DisplayName("Получение книги по айди. Книга не найдена")
     void getBookByIdNotFoundTest() {
-        var notFoundBookByIdOpt = bookDao.getById(4L);
+        var notFoundBookByIdOpt = bookDao.getById(5L);
         assertTrue(notFoundBookByIdOpt.isEmpty());
     }
 
@@ -128,5 +135,19 @@ class BookDaoImplTest {
 
         assertTrue(bookByIdOpt.isPresent());
         assertEquals(bookName, bookByIdOpt.get().getBookName());
+    }
+
+    @Test
+    @DisplayName("Получение книги по айди ")
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    void getBookById() {
+        var sessionFactory = em.getEntityManager().getEntityManagerFactory()
+                .unwrap(SessionFactory.class);
+        sessionFactory.getStatistics().setStatisticsEnabled(true);
+        var bookByIdOpt = bookDao.getById(2L);
+
+        assertTrue(bookByIdOpt.isPresent());
+        assertTrue(isNotEmpty(bookByIdOpt.get().getBookAuthors()));
+        assertThat(sessionFactory.getStatistics().getPrepareStatementCount()).isEqualTo(2);
     }
 }

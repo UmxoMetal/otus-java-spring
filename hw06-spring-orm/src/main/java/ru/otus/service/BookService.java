@@ -1,6 +1,5 @@
 package ru.otus.service;
 
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.domain.Book;
 
 import java.util.List;

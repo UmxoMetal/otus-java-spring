@@ -22,7 +22,6 @@ public class BookServiceImpl implements BookService {
 
     private static final String MSG_BOOK_NOT_FOUND = "Book with id %s not found";
     private static final String MSG_EMPTY_BOOK_TABLE = "Book table is empty";
-    private static final String MSG_DELETION_FAILED = "Book deletion by id failed";
 
     @Override
     @Transactional
@@ -31,6 +30,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public Book getBookById(long booId) {
         return bookDao.getById(booId)
                 .orElseThrow(() -> new BookServiceException(format(MSG_BOOK_NOT_FOUND, booId)));

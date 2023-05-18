@@ -1,10 +1,14 @@
 package ru.otus.domain;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static java.lang.String.format;
@@ -27,6 +31,7 @@ public class Author {
     private String fio;
 
     @ManyToMany(mappedBy = "bookAuthors")
+    @Fetch(FetchMode.SUBSELECT)
     private Set<Book> books = new HashSet<>();
 
     @Override

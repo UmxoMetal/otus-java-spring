@@ -1,6 +1,8 @@
 package ru.otus.domain;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -35,9 +37,11 @@ public class Book {
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "BOOK_SEQ")
     private Long booId;
+
     @Column(name = "BOOK_NAME", nullable = false, unique = true)
     private String bookName;
 
+    @Fetch(FetchMode.SUBSELECT)
     @ManyToMany(targetEntity = Author.class, fetch = LAZY, cascade = MERGE)
     @JoinTable(name = "BOOK_TO_AUTHOR", joinColumns = @JoinColumn(name = "BOO_ID"), inverseJoinColumns = @JoinColumn(name = "AUT_ID"))
     private List<Author> bookAuthors = new ArrayList<>();
