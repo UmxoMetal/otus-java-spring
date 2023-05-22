@@ -27,13 +27,8 @@ public class BookShellService {
     }
 
     @ShellMethod(value = "Get book by id", key = {"book-get-by-id"})
-    @Transactional
     public String getBookById(long booId) {
-        //return bookPrinterService.print(bookService.getBookById(booId));
-        Book bookById = bookService.getBookById(booId);
-        List<Author> bookAuthors = bookById.getBookAuthors();
-        System.out.println(bookAuthors);
-        return null;
+        return bookPrinterService.print(bookService.getBookById(booId));
     }
 
     @ShellMethod(value = "Get book by id with author", key = {"book-get-by-id-with-author"})
