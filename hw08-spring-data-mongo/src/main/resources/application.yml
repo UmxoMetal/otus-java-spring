@@ -1,0 +1,13 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: admin
+      password: admin
+      database: otus-spring
+
+mongock:
+  runner-type: "InitializingBean"
+  change-logs-scan-package:
+    - otus.migration
