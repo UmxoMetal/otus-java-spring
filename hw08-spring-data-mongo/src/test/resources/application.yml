@@ -1,0 +1,21 @@
+spring:
+    data:
+        mongodb:
+            port: 27017
+            database: test
+    shell:
+        interactive:
+            enabled: false
+        script:
+            spring:
+                shell:
+                    script: false
+
+mongock:
+    runner-type: "InitializingBean"
+    change-logs-scan-package:
+        - otus.migration
+
+logging:
+    level:
+        ROOT: INFO

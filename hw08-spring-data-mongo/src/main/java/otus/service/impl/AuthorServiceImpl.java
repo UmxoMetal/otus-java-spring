@@ -18,9 +18,9 @@ public class AuthorServiceImpl implements AuthorService {
     private static final String MSG_AUTHOR_NOT_FOUND = "Author with id %s not found";
 
     @Override
-    public Author getAuthorById(String autId) {
-        return authorRepository.findById(autId)
-                .orElseThrow(() -> new BookServiceException(format(MSG_AUTHOR_NOT_FOUND, autId)));
+    public Author getAuthorById(String authorId) {
+        return authorRepository.findById(authorId)
+                .orElseThrow(() -> new BookServiceException(format(MSG_AUTHOR_NOT_FOUND, authorId)));
     }
 
     @Override

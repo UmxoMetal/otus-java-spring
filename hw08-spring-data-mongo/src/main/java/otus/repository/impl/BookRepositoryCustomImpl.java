@@ -9,17 +9,16 @@ import org.springframework.stereotype.Repository;
 import otus.domain.Book;
 import otus.repository.BookRepositoryCustom;
 
-@Repository
 @RequiredArgsConstructor
 public class BookRepositoryCustomImpl implements BookRepositoryCustom {
 
     private final MongoTemplate mongoTemplate;
 
     @Override
-    public void updateBookRatingById(String booId, Short bookRating) {
+    public void updateBookRatingById(String bookId, Short bookRating) {
         final var update = new Update();
         update.set("bookRating", bookRating);
-        mongoTemplate.findAndModify(new Query(Criteria.where("booId")
-                .is(booId)), update, Book.class);
+        mongoTemplate.findAndModify(new Query(Criteria.where("bookId")
+                .is(bookId)), update, Book.class);
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @Document
 public class Book {
     @Id
-    private String booId;
+    private String bookId;
     private String bookName;
     @DBRef
     private Author bookAuthor;

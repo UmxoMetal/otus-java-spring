@@ -9,6 +9,8 @@ import otus.service.BookService;
 import java.util.List;
 
 import static java.lang.String.format;
+import static org.springframework.data.domain.Sort.*;
+import static org.springframework.data.domain.Sort.Order.*;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Service
@@ -21,19 +23,19 @@ public class BookServiceImpl implements BookService {
     private static final String MSG_EMPTY_BOOK_TABLE = "Book table is empty";
 
     @Override
-    public void createBook(Book book) {
-        bookRepository.save(book);
+    public Book create(Book book) {
+        return bookRepository.save(book);
     }
 
     @Override
-    public Book getBookById(String booId) {
-        return bookRepository.findById(booId)
-                .orElseThrow(() -> new BookServiceException(format(MSG_BOOK_NOT_FOUND, booId)));
+    public Book getBookById(String bookId) {
+        return bookRepository.findById(bookId)
+                .orElseThrow(() -> new BookServiceException(format(MSG_BOOK_NOT_FOUND, bookId)));
     }
 
     @Override
-    public void updateBookRatingById(String booId, Short bookRating) {
-        bookRepository.updateBookRatingById(booId, bookRating);
+    public void updateBookRatingById(String bookId, Short bookRating) {
+        bookRepository.updateBookRatingById(bookId, bookRating);
     }
 
     @Override
@@ -54,7 +56,25 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteBookById(String booId) {
-        bookRepository.delete(getBookById(booId));
+    public List<Book> getAllBooksSortedAsc() {
+        var allBooks = bookRepository.findAll(by(asc("bookName")));
+        if (isEmpty(allBooks)) {
+            throw new BookServiceException(MSG_EMPTY_BOOK_TABLE);
+        }
+        return allBooks;
+    }
+
+    @Override
+    public List<Book> getAllBooksSortedDesc() {
+        var allBooks = bookRepository.findAllByOrderByBookNameDesc();
+        if (isEmpty(allBooks)) {
+            throw new BookServiceException(MSG_EMPTY_BOOK_TABLE);
+        }
+        return allBooks;
+    }
+
+    @Override
+    public void deleteBookById(String bookId) {
+        bookRepository.delete(getBookById(bookId));
     }
 }

@@ -9,7 +9,6 @@ import otus.domain.Author;
 import otus.domain.Book;
 import otus.repository.AuthorRepositoryCustom;
 
-@Repository
 @RequiredArgsConstructor
 public class AuthorRepositoryCustomImpl implements AuthorRepositoryCustom {
 
@@ -17,6 +16,6 @@ public class AuthorRepositoryCustomImpl implements AuthorRepositoryCustom {
 
     @Override
     public boolean isAuthorPresentInBooks(Author author) {
-        return mongoTemplate.exists(new Query(Criteria.where("author").is(author)), Book.class);
+        return mongoTemplate.exists(new Query(Criteria.where("bookAuthor").is(author)), Book.class);
     }
 }

@@ -12,7 +12,7 @@ import static java.lang.String.format;
 @Document
 public class Genre {
     @Id
-    private String genId;
+    private String genreId;
     @NotNull
     private String genreName;
 
@@ -22,6 +22,6 @@ public class Genre {
                 Genre information
                 genre id:[%s]
                 genre name:[%s]
-                """, genId, genreName);
+                """, genreId, genreName);
     }
 }

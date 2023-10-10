@@ -11,7 +11,7 @@ import static java.lang.String.format;
 @Document
 public class Author {
     @Id
-    private String autId;
+    private String authorId;
     private String fio;
 
     @Override
@@ -20,6 +20,6 @@ public class Author {
                 Author information
                 author id:[%s]
                 author fio:[%s]
-                """, autId, fio);
+                """, authorId, fio);
     }
 }
